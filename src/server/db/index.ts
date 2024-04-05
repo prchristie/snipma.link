@@ -11,27 +11,17 @@ import { Pool } from "pg";
  * update.
  */
 const globalForDb = globalThis as unknown as {
-  conn: postgres.Sql | undefined;
+  pool: Pool | undefined;
 };
-const ssl = fs.readFileSync("./ca.crt").toString();
-
-const conn =
-  globalForDb.conn ??
-  postgres(env.DATABASE_URL, {
-    idle_timeout: 5000,
-    ssl: {
-      ca: ssl,
-    },
-  });
 
 const pool = new Pool({
   connectionString: env.DATABASE_URL,
   ssl: {
     // Please re-download this certificate at least monthly to avoid expiry
-    ca: ssl,
+    ca: env.CA_CERT,
   },
 });
 
-if (env.NODE_ENV !== "production") globalForDb.conn = conn;
+if (env.NODE_ENV !== "production") globalForDb.pool = pool;
 
 export const db = drizzle(pool, { schema });

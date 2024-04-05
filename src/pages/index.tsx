@@ -7,14 +7,6 @@ import { api } from "~/utils/api";
 
 export default function Home() {
   const [createdSnip, setCreatedSnip] = useState<Snip | undefined>(undefined);
-  const create = api.snip.create.useMutation({
-    onSuccess: (res) => {
-      setCreatedSnip(res.snip);
-    },
-  });
-
-  const wait = (ms: number) =>
-    new Promise((resolve) => setTimeout(resolve, ms));
 
   return (
     <>
@@ -24,7 +16,7 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex h-screen flex-col bg-background text-foreground">
+      <div className="flex h-screen flex-col bg-background text-foreground">
         <div className="container mx-auto h-full w-full">
           <Header />
           <div className="mx-auto flex max-w-[1000px] flex-col justify-around gap-16 pt-16">
@@ -32,23 +24,7 @@ export default function Home() {
             <SnipOutputView snip={createdSnip} />
           </div>
         </div>
-        {/* <button
-          onClick={async () => {
-            const oneHundred = async () => {
-              const promises = [];
-              for (let index = 0; index < 300; index++) {
-                promises.push(create.mutateAsync({ url: "http://google.com" }));
-              }
-              await wait(1000);
-              oneHundred().catch((e) => console.log(e));
-            };
-
-            oneHundred().catch((e) => console.log(e));
-          }}
-        >
-          Batch
-        </button> */}
-      </main>
+      </div>
     </>
   );
 }
