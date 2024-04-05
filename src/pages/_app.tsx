@@ -6,6 +6,7 @@ import { Inter } from "next/font/google";
 import { api } from "~/utils/api";
 
 import "~/styles/globals.css";
+import ToastProvider from "~/components/Toast/ToastProvider";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -18,9 +19,11 @@ const MyApp: AppType<{ session: Session | null }> = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <main className={`font-sans ${inter.variable}`}>
-        <Component {...pageProps} />
-      </main>
+      <ToastProvider>
+        <main className={`font-sans ${inter.variable}`}>
+          <Component {...pageProps} />
+        </main>
+      </ToastProvider>
     </SessionProvider>
   );
 };

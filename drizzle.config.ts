@@ -7,6 +7,7 @@ export default {
   driver: "pg",
   dbCredentials: {
     connectionString: env.DATABASE_URL,
+    ssl: true,
   },
   tablesFilter: ["snipma.link_*"],
 } satisfies Config;
